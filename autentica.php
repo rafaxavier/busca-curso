@@ -7,7 +7,7 @@ include('conexao.php');
 $usuario = $_POST['login'];
 $senha = $_POST['senha'];
 
-$sql = mysqli_query($conn,"select * from usuario where login='$usuario' and senha='$senha' limit 1") or die("Erro");
+$sql = mysqli_query($conn,"select * from usuarios where login='$usuario' and senha='$senha' limit 1") or die("Erro");
 
 if(mysqli_num_rows ($sql) > 0 )
 { 
@@ -34,5 +34,7 @@ else{
 
 
 ?>
+
+
 
 

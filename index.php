@@ -8,7 +8,7 @@ $senha = $_POST['senha'];
 
 
 // verifica se o nome de usuario ja existe no banco (login)
-$query =mysqli_query($conn ,"SELECT login FROM usuario WHERE login = '$login'");
+$query =mysqli_query($conn ,"SELECT login FROM usuarios WHERE login = '$login'");
 $array = mysqli_fetch_array($query);
 $logarray = $array['login'];
  
@@ -21,7 +21,7 @@ $logarray = $array['login'];
         alert('Esse login já existe');</script>";
  
       }else{
-        $insert =mysqli_query($conn ,"INSERT INTO usuario (`cpf`,`nome`,`login`,`senha`,`email`) VALUES ('$cpf','$nome','$login','$senha','$email')");
+        $insert =mysqli_query($conn ,"INSERT INTO usuarios (`cpf`,`nome`,`login`,`senha`,`email`) VALUES ('$cpf','$nome','$login','$senha','$email')");
     
          
         if($insert){

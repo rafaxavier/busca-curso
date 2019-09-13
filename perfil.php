@@ -13,24 +13,24 @@ if ((!isset($_SESSION['login']) == true) and (!isset($_SESSION['senha']) == true
   $parametro = filter_input(INPUT_GET, "parametro"); // recebe o parametro a ser alterado(obs : usua, email, senha... )
 
 
- $sql= mysqli_query($conn, "select * from usuario where COD_Usuario=".$_SESSION['id']."") or die("Erro");
+ $sql= mysqli_query($conn, "select * from usuarios where COD_Usuario=".$_SESSION['id']."") or die("Erro");
 $dadosUser =mysqli_fetch_assoc($sql);
     // editando os campos selecionados
   if ($parametro == 'newemail') {
-    $alteracao = mysqli_query($conn, "update usuario set email='$valor' WHERE COD_Usuario=".$_SESSION['id']." ") or die("Erro");
+    $alteracao = mysqli_query($conn, "update usuarios set email='$valor' WHERE COD_Usuario=".$_SESSION['id']." ") or die("Erro");
   } elseif ($parametro == 'newusuario') {
-      $verifica=mysqli_query($conn, "select login from usuario WHERE login='$valor' ") or die("Erro");
+      $verifica=mysqli_query($conn, "select login from usuarios WHERE login='$valor' ") or die("Erro");
       $numRow=mysqli_num_rows($verifica);
       if($numRow==0){
-        $alteracao = mysqli_query($conn, "update usuario set login='$valor' WHERE COD_Usuario=".$_SESSION['id']." ") or die("Erro");
+        $alteracao = mysqli_query($conn, "update usuarios set login='$valor' WHERE COD_Usuario=".$_SESSION['id']." ") or die("Erro");
       }else{
           echo"<script language='javascript' type='text/javascript'>
           alert('Usuário ".$valor." já existe, tente outro nome!');</script>";
       }
   } elseif ($parametro == 'newsenha') {
-    $alteracao = mysqli_query($conn, "update usuario set senha='$valor' WHERE COD_Usuario=".$_SESSION['id']." ") or die("Erro");
+    $alteracao = mysqli_query($conn, "update usuarios set senha='$valor' WHERE COD_Usuario=".$_SESSION['id']." ") or die("Erro");
   } elseif ($parametro == 'newinfo')  {
-    $alteracao = mysqli_query($conn, "update usuario set informacoes='$valor' WHERE COD_Usuario=".$_SESSION['id']." ") or die("Erro");
+    $alteracao = mysqli_query($conn, "update usuarios set informacoes='$valor' WHERE COD_Usuario=".$_SESSION['id']." ") or die("Erro");
   }
 
   ?>
@@ -65,58 +65,86 @@ $dadosUser =mysqli_fetch_assoc($sql);
   </head>
 
   <body>
-    <div>
-      <nav class="navbar navbar-inverse navbar-static-top" role="navigation">
-        <div class="container">
-          <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-              <span class="sr-only">Toggle navigation</span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-            </button>
-          </div>
-        </div>
-
-
-        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-          <nav class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow  ">
-            <a href="home.php"><img src="_imgs/logo.png" width="135" alt="cash plus"></a>
-            <ul class="nav flex ">
-              <li class="nav-item ">
-                <a class="nav-link" href="home.php">
-                  <i class="material-icons md-25 icon">home</i>
-                  Início
-                </a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link active" href="movimentacoes.php">
-                  <i class="material-icons md-25 icon">swap_horizontal_circle </i>
-                  Movimentações
-                </a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="relatorios.php">
-                  <i class="material-icons md-25">assignment</i>
-                  Relatórios
-                </a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="config.php">
-                  <i class="material-icons md-25 icon">settings</i>
-                  Configurações
-                </a>
-              </li>
-              <li class="nav-item text-nowrap pl-5  ml-5">
-                <a href="perfil.php"> "olá <?php echo $_SESSION['login']; ?> " <img src="<?php echo $_SESSION['path_avatar'];  ?>" alt="avatar" width="45"></a>
-              </li>
-              <li class="nav-item text-nowrap">
-                <a class="nav-link" href="logout.php"> | Sair |</a>
-              </li>
-            </ul>
-          </nav>
-        </div>
+  <div>   
+ <nav class="navbar navbar-inverse navbar-static-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
     </div>
+  </div>
+  
+
+<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+  <nav class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow  ">
+      <a href="home.php"><img src="_imgs/logo.png" width="135" alt="cash plus"></a>
+      <ul class="nav flex ">
+      <li class="nav-item ">
+          <a class="nav-link" href="home.php">
+          <i class="material-icons md-25 icon">home</i>
+            Início 
+          </a>
+          </li>
+
+        <?php 
+            if($_SESSION['perm_acesso'] == 0){
+        ?>
+          <li class="nav-item ">
+          <a class="nav-link" href="buscar-cursos.php">
+          <i class="material-icons md-25 icon">search</i>
+            Buscar 
+          </a>
+          </li>
+          <li class="nav-item ">
+          <a class="nav-link" href="home.php">
+          <i class="material-icons md-25 icon">assignment</i>
+            Meus Cursos 
+          </a>
+          </li>
+          
+        <?php } ?>
+
+        <?php 
+            if($_SESSION['perm_acesso'] == 1){
+        ?>
+        <li class="nav-item">
+          <a class="nav-link active" href="adm-cursos.php">
+          <i class="material-icons md-25 icon">assignment </i>
+            Cursos
+          </a>  
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link active" href="add-curso.php">
+          <i class="material-icons md-25 icon">add_circle </i>
+            Add Curso
+          </a>  
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="config.php">
+          <i class="material-icons md-25 icon">settings</i>
+            Configurações
+          </a>
+        </li>
+
+        <?php } ?>
+
+
+        <li class="nav-item text-nowrap pl-5  ml-5" >
+          <a href="perfil.php"> "olá  <?php echo $_SESSION['login'] ; ?> " <img src="<?php echo $_SESSION['path_avatar'];  ?>" alt="avatar" width="45" ></a>
+        </li>
+        <li class="nav-item text-nowrap ">
+          <a class="nav-link" href="logout.php"> | Sair |</a>
+        </li>
+        </ul>
+    </nav> 
+  </div>
+  </div>
+  <!-- aqui termina o navbar -->
 
     <!-- inicio conteudo -->
     <div class="container ">
