@@ -83,16 +83,17 @@ $dadosUser =mysqli_fetch_assoc($sql);
   <nav class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow  ">
       <a href="home.php"><img src="_imgs/logo.png" width="135" alt="cash plus"></a>
       <ul class="nav flex ">
-      <li class="nav-item ">
+      
+
+        <?php 
+            if($_SESSION['perm_acesso'] == 0){
+        ?>
+          <li class="nav-item ">
           <a class="nav-link" href="home.php">
           <i class="material-icons md-25 icon">home</i>
             Início 
           </a>
           </li>
-
-        <?php 
-            if($_SESSION['perm_acesso'] == 0){
-        ?>
           <li class="nav-item ">
           <a class="nav-link" href="buscar-cursos.php">
           <i class="material-icons md-25 icon">search</i>

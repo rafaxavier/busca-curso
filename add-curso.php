@@ -72,16 +72,15 @@ if((!isset($_SESSION['login'])==true) and (!isset($_SESSION['senha'])==true) and
   <nav class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow  ">
       <a href="home.php"><img src="_imgs/logo.png" width="135" alt="cash plus"></a>
       <ul class="nav flex ">
-      <li class="nav-item ">
+      <?php 
+            if($_SESSION['perm_acesso'] == 0){
+        ?>
+          <li class="nav-item ">
           <a class="nav-link" href="home.php">
           <i class="material-icons md-25 icon">home</i>
             Início 
           </a>
           </li>
-
-        <?php 
-            if($_SESSION['perm_acesso'] == 0){
-        ?>
           <li class="nav-item ">
           <a class="nav-link" href="buscar-cursos.php">
           <i class="material-icons md-25 icon">search</i>
@@ -137,74 +136,66 @@ if((!isset($_SESSION['login'])==true) and (!isset($_SESSION['senha'])==true) and
 
             
     <!--aqui começa o conteudo da página  -->
-    <div  style="width: 50%; padding-left: 100px"> 
-    <form id="formCadastro" name="formulario" action="<?php echo $_SERVER['PHP_SELF'] ?>" method="POST" >
-      <fieldset>
-        <legend>CADASTRAR NOVO CURSO</legend>
-      <label for="nome">NOME DO CURSO:</label>
-      <input type="text" id="nome" class="form-control" required  name="nome_curso"  placeholder="Nome Do Curso">
-      <br>
-      <label for="desc">DESCRIÇÃO:</label><br>
-      <textarea name="detalhes" id="desc" cols="94" wrap="soft" placeholder="  Insira Detalhes Do Curso"></textarea>
-      <br><br>
-      <label for="dinheiro">VALOR:</label>
-      <input type="text" id="dinheiro" class="dinheiro form-control" name="preco" placeholder="R$0,00">
-      <br>
-      <label for="file">CAPA PARA O CURSO:</label>
-      <input id="file" type="file" name="arquivos"  accept="image/png, image/jpeg"  multiple /> 
-      <br>
-      <label for="sel2">CATEGORIA:</label>
-      <select class="form-control" id="sel2" name="categoria">
-        <?php
-        $categoria = mysqli_query($conn, "select categoria from tb_categorias ") or die("Erro");
-          while ($aux = mysqli_fetch_assoc($categoria)) {
-            echo "<option value" . $aux['categoria'] . ">" . $aux['categoria'] . "</option>";
+    <div class="container-form-add-curso" > 
+      <div>
+      <div class="form-add-curso" >
+          <form id="formCadastro" name="formulario" action="inserir-curso.php" method="POST" enctype="multipart/form-data" >
+          <fieldset>
+          <legend>CADASTRAR NOVO CURSO</legend>
+          <label for="nome">NOME DO CURSO:</label>
+          <input type="text" id="nome" class="form-control"  name="nome_curso"  placeholder="Nome Do Curso" required >
+          <br>
+          <label for="desc" >DESCRIÇÃO:</label><br>
+          <textarea name="detalhes" class="form-control"  id="desc" cols="40" wrap="soft" placeholder="  Insira Detalhes Do Curso" required ></textarea>
+          <br><br>
+          <label for="dinheiro">VALOR:</label>
+          <input type="text" id="dinheiro" class="dinheiro form-control" name="preco" placeholder="R$0,00">
+          <br>
+          <label for="file">IMAGEM (.png ou .jpg):</label>
+          <input id="file" class="form-control" type="file" name="arquivo"  accept="image/png, image/jpeg" required  /> 
+          <br>
+        </div >
+        <div class="form-add-curso" >
+          <label for="sel2">CATEGORIA:</label>
+          <select class="form-control" id="sel2" name="categoria">
+          <?php
+          $categoria= mysqli_query($conn, "select categoria from tb_categorias ") or die("Erro");
+            while ($aux = mysqli_fetch_assoc($categoria)) {
+              echo "<option value=\"". $aux['categoria'] ."\" >" . $aux['categoria'] . "</option>";
+              }
+          ?>
+          </select>
+          <br>
+           <!-- select que define se input aparece ou não  -->
+          <label for="sel1">TIPO DE CURSO:</label>
+          <select class="form-control" id="sel1" name="tipo">
+          <?php
+            $tipo = mysqli_query($conn, "select tipo from tipos_de_curso ") or die("Erro");
+            while ($aux = mysqli_fetch_assoc($tipo)) {
+              echo "<option value=\"". $aux['tipo'] ."\" >" . $aux['tipo'] ."</option>";
             }
-        ?>
-      </select>
-      <br>
-      <!-- select que define se input aparece ou não  -->
-      <label for="sel1">TIPO DE CURSO:</label>
-      <select class="form-control" id="sel1" name="tipo">
-        <?php
-          $tipo = mysqli_query($conn, "select tipo from tipos_de_curso ") or die("Erro");
-          while ($aux = mysqli_fetch_assoc($tipo)) {
-            echo "<option value" . $aux['tipo'] . ">" . $aux['tipo'] . "</option>";
-          }
-        ?>
-      </select><br>
-      <!-- input acultos por javascript -->
-      <div id="inputOculto">
-        <fieldset>
-        <legend>CONTATO</legend>
-          <label for="telefone">Telefone:</label>
-          <input type="text" id="telefone" class="telefone form-control" name="contato" placeholder="(00) 0 0000-0000"><br>
-          
-          <label for="local">Localização:</label><br>
-          <textarea name="localizacao" id="local" cols="93" wrap="soft"></textarea>
-        </fieldset><br>
+          ?>
+          </select><br>
+          <!-- input acultos por javascript -->
+          <div id="inputOculto">
+          <legend>CONTATO</legend>
+            <label for="email">email:</label>
+            <input type="text" id="email" class="email form-control" name="contato" placeholder="E-mail"  ><br>
+            
+            <label for="local">Localização:</label><br>
+            <textarea name="localizacao" id="local" cols="40" wrap="soft" placeholder="   N°, Rua , Bairro , Cidade ..."  ></textarea>
+          <br>
+          </div>
+          <br>
+                
+          <button class="btn btn-lg btn-success btn-block" type="submit">Cadastrar</button>
+          </fieldset>
+          </form>
+        </div>
       </div>
-              
-      <button class="btn btn-lg btn-success btn-block" type="submit">Cadastrar</button>
-      </fieldset>
-    </form>
     </div>
 
-    <!-- função para aceitar somente jpg e png  -->
-    <!-- <script type="text/javascript">
-    function Checkfiles(){
-    var fup = document.getElementById('filename');
-    var fileName = fup.value;
-    var ext = fileName.substring(fileName.lastIndexOf('.') + 1);
 
-    if(ext =="jpeg" || ext=="png"){
-        return true;
-    }
-    else{
-        return false;
-    }
-    }
-    </script> -->
 
     <!-- função pra ocultar/exibir inputs de acordo com a resposta do usuario -->
     <script type="text/javascript">
@@ -223,7 +214,7 @@ if((!isset($_SESSION['login'])==true) and (!isset($_SESSION['senha'])==true) and
     <!-- mascara do form -->
     <script src="https://igorescobar.github.io/jQuery-Mask-Plugin/js/jquery.mask.min.js"></script>
     <script>
-      $('.telefone').mask('(00) 0 0000-0000');
+      $('.telefone').mask('00000000000');
       $('.dinheiro').mask('####0.00', {
         reverse: true
       });

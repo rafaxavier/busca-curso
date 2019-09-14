@@ -197,3 +197,59 @@ body {
   margin-right: 5px;
   
 }
+
+/* ############ aqui começa estilo das paginas de ADM */
+/* miniaturas da pagina adm_cursos.php */
+.container_miniaturas{
+    border: 1px solid rgba(4, 5, 105, 0.842);
+    display:table;
+    margin-left:5px;
+    margin-top:5px;
+    background-color: #2d52a5;
+    
+}
+
+.miniaturas_adm_cursos{
+  border: 1px solid rgba(4, 5, 105, 0.842);
+  max-width:120px;
+  float:left;
+  margin:3px;
+  padding:3px;
+  background: white;
+}
+
+.miniaturas_adm_cursos a:link {
+  text-decoration:none;
+}
+
+a:hover .miniaturas_adm_cursos div {
+}
+
+.miniaturas_adm_cursos img{
+  max-width: 100px;
+}
+
+
+/*########### estilo da pg add_cursos.php */
+.container-form-add-curso{
+  border: 1px solid red;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center
+  
+}
+
+.form-add-curso{
+
+  max-width:660px;
+  border: 1px solid green;
+  padding:20px;
+  margin:20px;
+  float:left;
+ 
+
+}
+/* .float{
+   float:left;
+} */

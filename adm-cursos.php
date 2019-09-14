@@ -2,31 +2,23 @@
 <?php
 include('conexao.php');
 session_start();
-if((!isset($_SESSION['login'])==true) and (!isset($_SESSION['senha'])==true) and (!isset($_SESSION['perm_acesso'])==true))
+if((!isset($_SESSION['login'])==true) and (!isset($_SESSION['senha'])==true) and (!isset($_SESSION['perm_acesso'])==1))
 	{
-    session_destroy(); # Destruir todas as sessões do navegador
-    // unset ($_SESSION['COD_Usuario']);
+		session_destroy(); # Destruir todas as sessões do navegador
 		unset ($_SESSION['login']);
     unset ($_SESSION['senha']);
-    unset ($_SESSION['perm_acesso']);
     unset ($_SESSION['path_avatar']);
 		header('location:naoAutenticado.php');
 		exit;
 
      
 	}else{
-    
-    // AQUI FAZ A BUSCA DA SOMA  DE TODOS OS VALORE NOS RESPECTIVOS MESES
-    echo ("logado com sucesso");
-    echo $_SESSION['perm_acesso'];
-    
+    $lista_cursos = mysqli_query($conn,"select * from cursos ") or die("Erro");
 
-    // AQUI FAZ A BUSCA DE TODAS A MOVIMENTAÇÕES NOS RESPECTIVOS ANOS DETALHADAS POR MESES 
-    //PARA EXIBIR NO GRAFICO E NA TABELA
-    
-
-    
-   
+  // $categoria = mysqli_query($conn,"select DESC_CATEGORIA from categoria ") or die("Erro");
+  // $movimentacoes = mysqli_query($conn,"select * from movimentacoes WHERE COD_Usuario=".$_SESSION['id']." ORDER BY idFINANCAS DESC ") or die("Erro");
+  // $forma_pg = mysqli_query($conn,"select FORMA_PAGAMENTO from forma_pagamento ") or die("Erro");
+		
 ?>
 
 <!doctype html>
@@ -46,7 +38,6 @@ if((!isset($_SESSION['login'])==true) and (!isset($_SESSION['senha'])==true) and
     <!-- Estilos customizados para esse template -->
     <link href="_css/dashboard.css" rel="stylesheet">
     <!-- mascara para inputs -->
-    <script src="https://igorescobar.github.io/jQuery-Mask-Plugin/js/jquery.mask.min.js"></script>  
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
@@ -135,11 +126,30 @@ if((!isset($_SESSION['login'])==true) and (!isset($_SESSION['senha'])==true) and
   </div>
   </div>
   <!-- aqui termina o navbar -->
-
-            
-    <!--aqui começa o conteudo da página  -->
-    <div  align="center"> 
+          
+           <!-- inicio lista de cursos adm -->
+          <div  class="container_miniaturas" ><!--começo container -->    
+              <?php
+              //pecorrendo os registros da consulta.
+              while ($aux = mysqli_fetch_assoc($lista_cursos)){ ?>
+              <a href="perfil.php">
+              <div class="miniaturas_adm_cursos">
+                <div>
+                  <h6><?php echo $aux["nome_curso"] ?></h6>
+                </div>
+                <div >
+                  <img src="<?php echo $aux["path_miniatura"] ?>"   />
+                </div>
+              </div> </a> 
+              <?php  } 
+							 //mysqli_close($conn);	
+		   				?>
+          </div> <!--fim container -->   
+      </div>
     </div>
+
+
+   
   </body>
 </html>
 
