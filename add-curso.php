@@ -146,7 +146,7 @@ if((!isset($_SESSION['login'])==true) and (!isset($_SESSION['senha'])==true) and
           <input type="text" id="nome" class="form-control"  name="nome_curso"  placeholder="Nome Do Curso" required >
           <br>
           <label for="desc" >DESCRIÇÃO:</label><br>
-          <textarea name="detalhes" class="form-control"  id="desc" cols="40" wrap="soft" placeholder="  Insira Detalhes Do Curso" required ></textarea>
+          <textarea name="detalhes" class="form-control"  id="desc" cols="40" maxlength="150" wrap="soft" placeholder="  Insira Detalhes Do Curso" required ></textarea>
           <br><br>
           <label for="dinheiro">VALOR:</label>
           <input type="text" id="dinheiro" class="dinheiro form-control" name="preco" placeholder="R$0,00">
@@ -189,6 +189,7 @@ if((!isset($_SESSION['login'])==true) and (!isset($_SESSION['senha'])==true) and
           <br>
                 
           <button class="btn btn-lg btn-success btn-block" type="submit">Cadastrar</button>
+          <a href="adm-cursos.php" class="btn btn-lg">Cancelar</a>
           </fieldset>
           </form>
         </div>

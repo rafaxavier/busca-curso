@@ -15,6 +15,7 @@ if((!isset($_SESSION['login'])==true) and (!isset($_SESSION['senha'])==true) and
 	}else{
     $lista_cursos = mysqli_query($conn,"select * from cursos ") or die("Erro");
 
+    
   // $categoria = mysqli_query($conn,"select DESC_CATEGORIA from categoria ") or die("Erro");
   // $movimentacoes = mysqli_query($conn,"select * from movimentacoes WHERE COD_Usuario=".$_SESSION['id']." ORDER BY idFINANCAS DESC ") or die("Erro");
   // $forma_pg = mysqli_query($conn,"select FORMA_PAGAMENTO from forma_pagamento ") or die("Erro");
@@ -42,6 +43,10 @@ if((!isset($_SESSION['login'])==true) and (!isset($_SESSION['senha'])==true) and
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+
+    <!-- teste   -->
+  <link href="css/sb-admin-2.min.css" rel="stylesheet">
+
   </head>
 
   <body>
@@ -126,30 +131,31 @@ if((!isset($_SESSION['login'])==true) and (!isset($_SESSION['senha'])==true) and
   </div>
   </div>
   <!-- aqui termina o navbar -->
+
+    <?php while ($aux = mysqli_fetch_assoc($lista_cursos)){ ?>
+     <div class="card shadow mb-4 m-3 float-left" style="width:300px; height:200px">
+      <div class="card-header py-3 ">
+        <h6 class="m-0 font-weight-bold text-primary"><?php echo $aux["nome_curso"] ?></h6>
+        </div>
+        <div class="card-body">
+        <img align="left"  src="<?php echo $aux["path_miniatura"] ?>" style="margin: 10px; width:100px;height:100px;" />
+        <h6><?php echo$aux["detalhes"] ?></h6>
+        <div class="h3 mb-0 font-weight-bold text-gray-800">
+          <?php 
+            if ($aux["preco"]<=0) 
+            {
+              echo "Gratuito";
+            }else {
+                     echo "R$",$aux["preco"];
+                  }
           
-           <!-- inicio lista de cursos adm -->
-          <div  class="container_miniaturas" ><!--começo container -->    
-              <?php
-              //pecorrendo os registros da consulta.
-              while ($aux = mysqli_fetch_assoc($lista_cursos)){ ?>
-              <a href="perfil.php">
-              <div class="miniaturas_adm_cursos">
-                <div>
-                  <h6><?php echo $aux["nome_curso"] ?></h6>
-                </div>
-                <div >
-                  <img src="<?php echo $aux["path_miniatura"] ?>"   />
-                </div>
-              </div> </a> 
-              <?php  } 
-							 //mysqli_close($conn);	
-		   				?>
-          </div> <!--fim container -->   
+          ?>
+        </div>
       </div>
-    </div>
+     </div>
+     <?php  } 
+     ?>
 
-
-   
   </body>
 </html>
 
