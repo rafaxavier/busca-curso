@@ -114,12 +114,7 @@ if((!isset($_SESSION['login'])==true) and (!isset($_SESSION['senha'])==true) and
             Add Curso
           </a>  
         </li>
-        <li class="nav-item">
-          <a class="nav-link" href="config.php">
-          <i class="material-icons md-25 icon">settings</i>
-            Configurações
-          </a>
-        </li>
+        
 
         <?php } ?>
 

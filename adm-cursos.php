@@ -2,7 +2,7 @@
 <?php
 include('conexao.php');
 session_start();
-if((!isset($_SESSION['login'])==true) and (!isset($_SESSION['senha'])==true) and (!isset($_SESSION['perm_acesso'])==1))
+if((!isset($_SESSION['login'])==true) and (!isset($_SESSION['senha'])==true) and (!isset($_SESSION['perm_acesso'])==true))
 	{
 		session_destroy(); # Destruir todas as sessões do navegador
 		unset ($_SESSION['login']);
@@ -61,7 +61,7 @@ if((!isset($_SESSION['login'])==true) and (!isset($_SESSION['senha'])==true) and
 
 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
   <nav class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow  ">
-      <a href="home.php"><img src="_imgs/logo.png" width="135" alt="cash plus"></a>
+      <img src="_imgs/logo.png" width="135" alt="busca-curso">
       <ul class="nav flex ">
       
 
@@ -105,12 +105,7 @@ if((!isset($_SESSION['login'])==true) and (!isset($_SESSION['senha'])==true) and
             Add Curso
           </a>  
         </li>
-        <li class="nav-item">
-          <a class="nav-link" href="config.php">
-          <i class="material-icons md-25 icon">settings</i>
-            Configurações
-          </a>
-        </li>
+        
 
         <?php } ?>
 
@@ -132,7 +127,11 @@ if((!isset($_SESSION['login'])==true) and (!isset($_SESSION['senha'])==true) and
               <?php
               //pecorrendo os registros da consulta.
               while ($aux = mysqli_fetch_assoc($lista_cursos)){ ?>
-              <a href="perfil.php">
+              <?php 
+                $paremetro= $aux["COD_curso"];
+                echo "<a href=\"perfil_curso_adm.php/?parametro=$paremetro\"\>";
+              ?>
+              <!-- <a href="perfil_curso_adm.php/?parametro=""\"> -->
               <div class="miniaturas_adm_cursos">
                 <div>
                   <h6><?php echo $aux["nome_curso"] ?></h6>

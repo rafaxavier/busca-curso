@@ -5,7 +5,7 @@
 include('conexao.php');
 
 session_start();
-if((!isset($_SESSION['login'])==true) and (!isset($_SESSION['senha'])==true) and (!isset($_SESSION['perm_acesso'])==1)){
+if((!isset($_SESSION['login'])==true) and (!isset($_SESSION['senha'])==true) and (!isset($_SESSION['perm_acesso'])==true)){
   session_destroy(); # Destruir todas as sessões do navegador
   unset($_SESSION['login']);
   unset($_SESSION['senha']);
@@ -57,10 +57,10 @@ if((!isset($_SESSION['login'])==true) and (!isset($_SESSION['senha'])==true) and
     if($insere_curso){
         header("location: adm-cursos.php");
         echo"<script language='javascript' type='text/javascript'>
-        alert('Usuário cadastrado com sucesso!');</script>";
+        alert('Curso cadastrado com sucesso!');</script>";
     }else{
         echo"<script language='javascript' type='text/javascript'>
-        alert('Não foi possível cadastrar esse usuário');</script>";
+        alert('Não foi possível cadastrar esse Curso');</script>";
         
 
     }

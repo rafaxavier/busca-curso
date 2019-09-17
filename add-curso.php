@@ -70,7 +70,7 @@ if((!isset($_SESSION['login'])==true) and (!isset($_SESSION['senha'])==true) and
 
 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
   <nav class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow  ">
-      <a href="home.php"><img src="_imgs/logo.png" width="135" alt="cash plus"></a>
+      <img src="_imgs/logo.png" width="135" alt="cash plus">
       <ul class="nav flex ">
       <?php 
             if($_SESSION['perm_acesso'] == 0){
@@ -112,12 +112,7 @@ if((!isset($_SESSION['login'])==true) and (!isset($_SESSION['senha'])==true) and
             Add Curso
           </a>  
         </li>
-        <li class="nav-item">
-          <a class="nav-link" href="config.php">
-          <i class="material-icons md-25 icon">settings</i>
-            Configurações
-          </a>
-        </li>
+        
 
         <?php } ?>
 
