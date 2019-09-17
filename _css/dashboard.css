@@ -205,7 +205,7 @@ body {
     display:table;
     margin-left:5px;
     margin-top:5px;
-    background-color: #2d52a5;
+    /* background-color: #2d52a5; */
     
 }
 
@@ -222,8 +222,7 @@ body {
   text-decoration:none;
 }
 
-a:hover .miniaturas_adm_cursos div {
-}
+
 
 .miniaturas_adm_cursos img{
   max-width: 100px;
@@ -232,7 +231,7 @@ a:hover .miniaturas_adm_cursos div {
 
 /*########### estilo da pg add_cursos.php */
 .container-form-add-curso{
-  border: 1px solid red;
+  /* border: 1px solid red; */
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -243,7 +242,7 @@ a:hover .miniaturas_adm_cursos div {
 .form-add-curso{
 
   max-width:660px;
-  border: 1px solid green;
+  border: 1px solid rgba(4, 5, 105, 0.842);
   padding:20px;
   margin:20px;
   float:left;

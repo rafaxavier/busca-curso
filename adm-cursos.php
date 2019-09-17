@@ -123,12 +123,20 @@ if((!isset($_SESSION['login'])==true) and (!isset($_SESSION['senha'])==true) and
   <!-- aqui termina o navbar -->
           
            <!-- inicio lista de cursos adm -->
+
           <?php while ($aux = mysqli_fetch_assoc($lista_cursos)){ ?>
+
+
+          <div  class="container_miniaturas" ><!--começo container -->    
+              <?php
+              //pecorrendo os registros da consulta.
+              while ($aux = mysqli_fetch_assoc($lista_cursos)){ ?>
 
               <?php 
                 $paremetro= $aux["COD_curso"];
                 echo "<a href=\"perfil_curso_adm.php/?parametro=$paremetro\"\>";
               ?>
+
               
      <div class="card shadow mb-4 m-3 float-left" style="width:300px; height:200px">
       <div class="card-header py-3 ">
@@ -147,6 +155,20 @@ if((!isset($_SESSION['login'])==true) and (!isset($_SESSION['senha'])==true) and
                   }
           ?>
         </div>
+
+              <!-- <a href="perfil_curso_adm.php/?parametro=""\"> -->
+              <div class="miniaturas_adm_cursos">
+                <div>
+                  <h6><?php echo $aux["nome_curso"] ?></h6>
+                </div>
+                <div >
+                  <img src="<?php echo $aux["path_miniatura"] ?>"   />
+                </div>
+              </div> </a> 
+              <?php  } 
+							 //mysqli_close($conn);	
+		   				?>
+          </div> <!--fim container -->   >>>>>>> master
       </div>
      </div>
      <?php  } 
