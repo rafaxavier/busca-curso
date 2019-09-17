@@ -131,6 +131,27 @@ if((!isset($_SESSION['login'])==true) and (!isset($_SESSION['senha'])==true) and
             
     <!--aqui começa o conteudo da página  -->
     <?php while ($aux = mysqli_fetch_assoc($lista_cursos)){ ?> 
+
+
+        <?php 
+            if($_SESSION['perm_acesso'] == 1){
+        ?>
+              <?php 
+                $paremetro= $aux["COD_curso"];
+                echo "<a href=\"perfil_curso_adm.php/?parametro=$paremetro\"\>";
+              ?>
+      <?php } ?>
+
+      <?php 
+            if($_SESSION['perm_acesso'] == 0){
+        ?>
+            <?php 
+                $paremetro= $aux["COD_curso"];
+                echo "<a href=\"perfil_meus_cursos.php/?parametro=$paremetro\"\>";
+              ?>
+       <?php } ?>
+
+
      <div class="card shadow mb-4 m-3 float-left" style="width:300px; height:250px">
       <div class="card-header py-3 ">
         <h6 class="m-0 font-weight-bold text-primary"><?php echo $aux["nome_curso"] ?></h6>
@@ -148,9 +169,6 @@ if((!isset($_SESSION['login'])==true) and (!isset($_SESSION['senha'])==true) and
                   }
           ?>
         </div>
-        <div>
-          <input type="submit" value="Add to Cart" />
-          </div>
         </div>
       </div>
      <?php  } 

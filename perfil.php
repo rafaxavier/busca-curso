@@ -1,7 +1,8 @@
 <?php
 include('conexao.php');
 session_start();
-if ((!isset($_SESSION['login']) == true) and (!isset($_SESSION['senha']) == true)) {
+if((!isset($_SESSION['login'])==true) and (!isset($_SESSION['senha'])==true) and (!isset($_SESSION['perm_acesso'])==true))
+{
   session_destroy(); # Destruir todas as sessões do navegador
   unset($_SESSION['login']);
   unset($_SESSION['senha']);
@@ -81,7 +82,7 @@ $dadosUser =mysqli_fetch_assoc($sql);
 
 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
   <nav class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow  ">
-      <a href="home.php"><img src="_imgs/logo.png" width="135" alt="cash plus"></a>
+    <img src="_imgs/logo.png" width="135" alt="Busca Curso">
       <ul class="nav flex ">
       
 
@@ -125,12 +126,7 @@ $dadosUser =mysqli_fetch_assoc($sql);
             Add Curso
           </a>  
         </li>
-        <li class="nav-item">
-          <a class="nav-link" href="config.php">
-          <i class="material-icons md-25 icon">settings</i>
-            Configurações
-          </a>
-        </li>
+        
 
         <?php } ?>
 
@@ -149,8 +145,8 @@ $dadosUser =mysqli_fetch_assoc($sql);
 
     <!-- inicio conteudo -->
     <div class="container ">
-        <div class="row">
-            <div class="media mt-2 col box1 ">
+        <div class="row container-form-add-curso ">
+            <div class="form-add-curso">
                 <div class="media-body">
                     <h2>PERFIL</h2>
                 <img class="align-self-center  " src="<?php echo $dadosUser['path_avatar'] ?>" alt="avatar" width="250">
@@ -165,7 +161,8 @@ $dadosUser =mysqli_fetch_assoc($sql);
             </div>
 
             <!-- form pra editar  o perfil de usuario ###########    -->
-            <div class="col ml-5 mt-5 ">
+            
+            <div class=" form-add-curso ">
                 <h2>Edite seu perfil:</h2>
                 <form method="get" action="<?php echo $_SERVER["PHP_SELF"] ?>">
                     <div class="input-group mb-3">
@@ -208,6 +205,7 @@ $dadosUser =mysqli_fetch_assoc($sql);
                     <input class="btn btn-success" type="button " value="Atualizar" onClick="history.go(0)"> 
                 </form>
             </div>
+            
             <!-- fim do form de edição de perfil ################ -->
         </div>
     </div>

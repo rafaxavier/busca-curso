@@ -2,7 +2,7 @@
 <?php
 include('conexao.php');
 session_start();
-if((!isset($_SESSION['login'])==true) and (!isset($_SESSION['senha'])==true) and (!isset($_SESSION['perm_acesso'])==1))
+if((!isset($_SESSION['login'])==true) and (!isset($_SESSION['senha'])==true) and (!isset($_SESSION['perm_acesso'])==true))
   {
     session_destroy(); # Destruir todas as sessões do navegador
     unset ($_SESSION['login']);
@@ -13,8 +13,8 @@ if((!isset($_SESSION['login'])==true) and (!isset($_SESSION['senha'])==true) and
 
      
   }else{
-
-    $lista_cursos = mysqli_query($conn,"SELECT COD_adesao FROM cursos_aderidos WHERE COD_usuario = ".$_SESSION['id']."") or die("Erro");
+    
+    $lista_cursos = mysqli_query($conn,"SELECT*FROM cursos WHERE COD_curso=(SELECT COD_curso FROM cursos_aderidos WHERE COD_usuario=".$_SESSION['id']."") or die("Erro");
     
   // $categoria = mysqli_query($conn,"select DESC_CATEGORIA from categoria ") or die("Erro");
   // $movimentacoes = mysqli_query($conn,"select * from movimentacoes WHERE COD_Usuario=".$_SESSION['id']." ORDER BY idFINANCAS DESC ") or die("Erro");
@@ -132,6 +132,9 @@ if((!isset($_SESSION['login'])==true) and (!isset($_SESSION['senha'])==true) and
             
     <!--aqui começa o conteudo da página  -->
     <?php while ($aux = mysqli_fetch_assoc($lista_cursos)){ ?>
+
+
+
      <div class="card shadow mb-4 m-3 float-left" style="width:300px; height:200px">
       <div class="card-header py-3 ">
         <h6 class="m-0 font-weight-bold text-primary"><?php echo $aux["nome_curso"] ?></h6>

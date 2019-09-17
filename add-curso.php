@@ -3,18 +3,18 @@
 include('conexao.php');
 session_start();
 if((!isset($_SESSION['login'])==true) and (!isset($_SESSION['senha'])==true) and (!isset($_SESSION['perm_acesso'])==true))
-	{
+  {
     session_destroy(); # Destruir todas as sessões do navegador
     // unset ($_SESSION['COD_Usuario']);
-		unset ($_SESSION['login']);
+    unset ($_SESSION['login']);
     unset ($_SESSION['senha']);
     unset ($_SESSION['perm_acesso']);
     unset ($_SESSION['path_avatar']);
-		header('location:naoAutenticado.php');
-		exit;
+    header('location:naoAutenticado.php');
+    exit;
 
      
-	}else{
+  }else{
     
     // AQUI FAZ A BUSCA DA SOMA  DE TODOS OS VALORE NOS RESPECTIVOS MESES
     echo ("logado com sucesso");
@@ -111,12 +111,6 @@ if((!isset($_SESSION['login'])==true) and (!isset($_SESSION['senha'])==true) and
           <i class="material-icons md-25 icon">add_circle </i>
             Add Curso
           </a>  
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="config.php">
-          <i class="material-icons md-25 icon">settings</i>
-            Configurações
-          </a>
         </li>
 
         <?php } ?>
