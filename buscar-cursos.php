@@ -2,23 +2,23 @@
 <?php
 include('conexao.php');
 session_start();
-if((!isset($_SESSION['login'])==true) and (!isset($_SESSION['senha'])==true) and (!isset($_SESSION['perm_acesso'])==true))
-	{
-		session_destroy(); # Destruir todas as sessões do navegador
-		unset ($_SESSION['login']);
+if((!isset($_SESSION['login'])==true) and (!isset($_SESSION['senha'])==true) and (!isset($_SESSION['perm_acesso'])==1))
+  {
+    session_destroy(); # Destruir todas as sessões do navegador
+    unset ($_SESSION['login']);
     unset ($_SESSION['senha']);
     unset ($_SESSION['path_avatar']);
-		header('location:naoAutenticado.php');
-		exit;
+    header('location:naoAutenticado.php');
+    exit;
 
      
-	}else{
+  }else{
     $lista_cursos = mysqli_query($conn,"select * from cursos ") or die("Erro");
 
   // $categoria = mysqli_query($conn,"select DESC_CATEGORIA from categoria ") or die("Erro");
   // $movimentacoes = mysqli_query($conn,"select * from movimentacoes WHERE COD_Usuario=".$_SESSION['id']." ORDER BY idFINANCAS DESC ") or die("Erro");
   // $forma_pg = mysqli_query($conn,"select FORMA_PAGAMENTO from forma_pagamento ") or die("Erro");
-		
+    
 ?>
 
 <!doctype html>
@@ -38,6 +38,7 @@ if((!isset($_SESSION['login'])==true) and (!isset($_SESSION['senha'])==true) and
     <!-- Estilos customizados para esse template -->
     <link href="_css/dashboard.css" rel="stylesheet">
     <!-- mascara para inputs -->
+    <script src="https://igorescobar.github.io/jQuery-Mask-Plugin/js/jquery.mask.min.js"></script>  
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
@@ -61,7 +62,7 @@ if((!isset($_SESSION['login'])==true) and (!isset($_SESSION['senha'])==true) and
 
 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
   <nav class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow  ">
-      <img src="_imgs/logo.png" width="135" alt="busca-curso">
+      <a href="home.php"><img src="_imgs/logo.png" width="135" alt="cash plus"></a>
       <ul class="nav flex ">
       
 
@@ -81,7 +82,7 @@ if((!isset($_SESSION['login'])==true) and (!isset($_SESSION['senha'])==true) and
           </a>
           </li>
           <li class="nav-item ">
-          <a class="nav-link" href="home.php">
+          <a class="nav-link" href="meus_cursos.php">
           <i class="material-icons md-25 icon">assignment</i>
             Meus Cursos 
           </a>
@@ -105,7 +106,12 @@ if((!isset($_SESSION['login'])==true) and (!isset($_SESSION['senha'])==true) and
             Add Curso
           </a>  
         </li>
-        
+        <li class="nav-item">
+          <a class="nav-link" href="config.php">
+          <i class="material-icons md-25 icon">settings</i>
+            Configurações
+          </a>
+        </li>
 
         <?php } ?>
 
@@ -121,16 +127,33 @@ if((!isset($_SESSION['login'])==true) and (!isset($_SESSION['senha'])==true) and
   </div>
   </div>
   <!-- aqui termina o navbar -->
-          
-           <!-- inicio lista de cursos adm -->
-          <?php while ($aux = mysqli_fetch_assoc($lista_cursos)){ ?>
 
+            
+    <!--aqui começa o conteudo da página  -->
+    <h1>BUSCAR CURSOS</h1>
+    <?php while ($aux = mysqli_fetch_assoc($lista_cursos)){ ?> 
+
+
+        <?php 
+            if($_SESSION['perm_acesso'] == 1){
+        ?>
               <?php 
                 $paremetro= $aux["COD_curso"];
                 echo "<a href=\"perfil_curso_adm.php/?parametro=$paremetro\"\>";
               ?>
-              
-     <div class="card shadow mb-4 m-3 float-left" style="width:300px; height:200px">
+      <?php } ?>
+
+      <?php 
+            if($_SESSION['perm_acesso'] == 0){
+        ?>
+            <?php 
+                $paremetro= $aux["COD_curso"];
+                echo "<a href=\"aderir-curso-perfil.php/?parametro=$paremetro\"\>";
+              ?>
+       <?php } ?>
+
+
+     <div class="card shadow mb-4 m-3 float-left" style="width:300px; height:250px">
       <div class="card-header py-3 ">
         <h6 class="m-0 font-weight-bold text-primary"><?php echo $aux["nome_curso"] ?></h6>
         </div>
@@ -147,11 +170,10 @@ if((!isset($_SESSION['login'])==true) and (!isset($_SESSION['senha'])==true) and
                   }
           ?>
         </div>
+        </div>
       </div>
-     </div>
      <?php  } 
      ?>
-
   </body>
 </html>
 

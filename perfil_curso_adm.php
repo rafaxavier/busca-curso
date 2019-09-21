@@ -197,7 +197,7 @@ $dadosCurso =mysqli_fetch_assoc($sql);
                     <div class="input-group mb-3">
                         <input type="hidden" name="parametro2" value="NewContato">
                         <input type="hidden" name="cod-curso" value="<?php echo $dadosCurso['COD_curso'] ?>">
-                        <input type="text" class="form-control"  required name="valor" placeholder="Insira  nova Contato do curso" aria-describedby="button-addon1">
+                        <input type="text" class="form-control"  required name="valor" placeholder="Insira  novo Contato do curso" aria-describedby="button-addon1">
                         <div class="input-group-append">
                             <button class="btn btn-warning" type="submit" id="button-addon1">Aterar</button>
                         </div>

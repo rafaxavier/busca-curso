@@ -2,31 +2,23 @@
 <?php
 include('conexao.php');
 session_start();
-if((!isset($_SESSION['login'])==true) and (!isset($_SESSION['senha'])==true) and (!isset($_SESSION['perm_acesso'])==true))
-	{
+if((!isset($_SESSION['login'])==true) and (!isset($_SESSION['senha'])==true) and (!isset($_SESSION['perm_acesso'])==1))
+  {
     session_destroy(); # Destruir todas as sessões do navegador
-    // unset ($_SESSION['COD_Usuario']);
-		unset ($_SESSION['login']);
+    unset ($_SESSION['login']);
     unset ($_SESSION['senha']);
-    unset ($_SESSION['perm_acesso']);
     unset ($_SESSION['path_avatar']);
-		header('location:naoAutenticado.php');
-		exit;
+    header('location:naoAutenticado.php');
+    exit;
 
      
-	}else{
-    
-    // AQUI FAZ A BUSCA DA SOMA  DE TODOS OS VALORE NOS RESPECTIVOS MESES
-    echo ("logado com sucesso");
-    echo $_SESSION['perm_acesso'];
-    
+  }else{
+    $lista_cursos = mysqli_query($conn,"select * from cursos ") or die("Erro");
 
-    // AQUI FAZ A BUSCA DE TODAS A MOVIMENTAÇÕES NOS RESPECTIVOS ANOS DETALHADAS POR MESES 
-    //PARA EXIBIR NO GRAFICO E NA TABELA
+  // $categoria = mysqli_query($conn,"select DESC_CATEGORIA from categoria ") or die("Erro");
+  // $movimentacoes = mysqli_query($conn,"select * from movimentacoes WHERE COD_Usuario=".$_SESSION['id']." ORDER BY idFINANCAS DESC ") or die("Erro");
+  // $forma_pg = mysqli_query($conn,"select FORMA_PAGAMENTO from forma_pagamento ") or die("Erro");
     
-
-    
-   
 ?>
 
 <!doctype html>
@@ -54,6 +46,8 @@ if((!isset($_SESSION['login'])==true) and (!isset($_SESSION['senha'])==true) and
   </head>
 
   <body>
+
+
   <div>   
  <nav class="navbar navbar-inverse navbar-static-top" role="navigation">
   <div class="container">
@@ -90,7 +84,7 @@ if((!isset($_SESSION['login'])==true) and (!isset($_SESSION['senha'])==true) and
           </a>
           </li>
           <li class="nav-item ">
-          <a class="nav-link" href="home.php">
+          <a class="nav-link" href="meus_cursos.php">
           <i class="material-icons md-25 icon">assignment</i>
             Meus Cursos 
           </a>
@@ -114,7 +108,12 @@ if((!isset($_SESSION['login'])==true) and (!isset($_SESSION['senha'])==true) and
             Add Curso
           </a>  
         </li>
-        
+        <li class="nav-item">
+          <a class="nav-link" href="config.php">
+          <i class="material-icons md-25 icon">settings</i>
+            Configurações
+          </a>
+        </li>
 
         <?php } ?>
 
@@ -130,11 +129,80 @@ if((!isset($_SESSION['login'])==true) and (!isset($_SESSION['senha'])==true) and
   </div>
   </div>
   <!-- aqui termina o navbar -->
-
+  
+  <!-- carrossel  começo-->
+<div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+  <ol class="carousel-indicators">
+    <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+    <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+    <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+  </ol>
+  <div class="carousel-inner">
+    <div class="carousel-item active" style=" height: 250px">
+      <img  src="https://as2.ftcdn.net/jpg/02/62/05/07/500_F_262050703_VQIoENajD9NZ7wzduGIk6s7nGdnGXrht.jpg" alt="Primeiro Slide">
+    </div>
+    <div class="carousel-item" style="height: 250px">
+      <img  src="https://as1.ftcdn.net/jpg/02/02/79/34/500_F_202793442_MrWUUaeP155FISK4pBLDv9cEJPeZDuEP.jpg" alt="Segundo Slide">
+    </div>
+    <div class="carousel-item" style=" height: 250px">
+      <img  src="https://as2.ftcdn.net/jpg/02/48/54/19/500_F_248541948_L3COINjtxSC1Gzmz46AqjPOZQ5sxTv7f.jpg" alt="Terceiro Slide">
+    </div>
+  </div>
+  <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="sr-only">Anterior</span>
+  </a>
+  <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="sr-only">Próximo</span>
+  </a>
+</div>
+  <!-- carrossel fim -->
             
     <!--aqui começa o conteudo da página  -->
-    <div  align="center"> 
-    </div>
+    <?php while ($aux = mysqli_fetch_assoc($lista_cursos)){ ?> 
+
+
+        <?php 
+            if($_SESSION['perm_acesso'] == 1){
+        ?>
+              <?php 
+                $paremetro= $aux["COD_curso"];
+                echo "<a href=\"perfil_curso_adm.php/?parametro=$paremetro\"\>";
+              ?>
+      <?php } ?>
+
+      <?php 
+            if($_SESSION['perm_acesso'] == 0){
+        ?>
+            <?php 
+                $paremetro= $aux["COD_curso"];
+                echo "<a href=\"aderir-curso-perfil.php/?parametro=$paremetro\"\>";
+              ?>
+       <?php } ?>
+
+
+     <div class="card shadow mb-4 m-3 float-left" style="width:300px; height:250px">
+      <div class="card-header py-3 ">
+        <h6 class="m-0 font-weight-bold text-primary"><?php echo $aux["nome_curso"] ?></h6>
+        </div>
+        <div class="card-body">
+        <img align="left"  src="<?php echo $aux["path_miniatura"] ?>" style="margin: 10px; width:100px;height:100px;" />
+        <h6><?php echo$aux["detalhes"] ?></h6>
+        <div class="h3 mb-0 font-weight-bold text-gray-800">
+          <?php 
+            if ($aux["preco"]<=0) 
+            {
+              echo "Gratuito";
+            }else {
+                     echo "R$",$aux["preco"];
+                  }
+          ?>
+        </div>
+        </div>
+      </div>
+     <?php  } 
+     ?>
   </body>
 </html>
 

@@ -3,18 +3,18 @@
 include('conexao.php');
 session_start();
 if((!isset($_SESSION['login'])==true) and (!isset($_SESSION['senha'])==true) and (!isset($_SESSION['perm_acesso'])==true))
-	{
+  {
     session_destroy(); # Destruir todas as sessões do navegador
     // unset ($_SESSION['COD_Usuario']);
-		unset ($_SESSION['login']);
+    unset ($_SESSION['login']);
     unset ($_SESSION['senha']);
     unset ($_SESSION['perm_acesso']);
     unset ($_SESSION['path_avatar']);
-		header('location:naoAutenticado.php');
-		exit;
+    header('location:naoAutenticado.php');
+    exit;
 
      
-	}else{
+  }else{
     
     // AQUI FAZ A BUSCA DA SOMA  DE TODOS OS VALORE NOS RESPECTIVOS MESES
     echo ("logado com sucesso");
@@ -112,7 +112,6 @@ if((!isset($_SESSION['login'])==true) and (!isset($_SESSION['senha'])==true) and
             Add Curso
           </a>  
         </li>
-        
 
         <?php } ?>
 
@@ -141,7 +140,7 @@ if((!isset($_SESSION['login'])==true) and (!isset($_SESSION['senha'])==true) and
           <input type="text" id="nome" class="form-control"  name="nome_curso"  placeholder="Nome Do Curso" required >
           <br>
           <label for="desc" >DESCRIÇÃO:</label><br>
-          <textarea name="detalhes" class="form-control"  id="desc" cols="40" wrap="soft" placeholder="  Insira Detalhes Do Curso" required ></textarea>
+          <textarea name="detalhes" class="form-control"  id="desc" cols="40" maxlength="150" wrap="soft" placeholder="  Insira Detalhes Do Curso" required ></textarea>
           <br><br>
           <label for="dinheiro">VALOR:</label>
           <input type="text" id="dinheiro" class="dinheiro form-control" name="preco" placeholder="R$0,00">
@@ -184,6 +183,7 @@ if((!isset($_SESSION['login'])==true) and (!isset($_SESSION['senha'])==true) and
           <br>
                 
           <button class="btn btn-lg btn-success btn-block" type="submit">Cadastrar</button>
+          <a href="adm-cursos.php" class="btn btn-lg">Cancelar</a>
           </fieldset>
           </form>
         </div>
